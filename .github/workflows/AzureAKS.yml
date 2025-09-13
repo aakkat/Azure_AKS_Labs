@@ -53,9 +53,9 @@ jobs:
         run: terraform output
 
       - name: Deploy Application
-       run: |
-         az aks get-credentials -n "cluster-bursting-jennet" -g "rg-refined-swine"
-         kubectl apply -f ./AKSApp/sampleapp.yaml
-         sleep 40
-         kubectl get service nginx-service
-         rm -rf ~/.kube
+        run:
+          az aks get-credentials -n "cluster-bursting-jennet" -g "rg-refined-swine"
+          kubectl apply -f ./AKSApp/sampleapp.yaml
+          sleep 40
+          kubectl get service nginx-service
+          rm -rf ~/.kube
