@@ -28,7 +28,7 @@ provider "azurerm" {
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
-  use_oidc        = true
+  use_oidc = true
 }
 
 # Random provider for generating random names
