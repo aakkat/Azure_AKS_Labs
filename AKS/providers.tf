@@ -23,16 +23,18 @@ terraform {
 
 provider "azurerm" {
    features {}
+   use_oidc = true
+   subscription_id = var.subscription_id
+   tenant_id       = var.tenant_id
+   client_id       = var.client_id
 }
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
-  # Provider authentication will be handled through GitHub Actions environment variables:
-  # AZURE_CLIENT_ID
-  # AZURE_CLIENT_SECRET
-  # AZURE_SUBSCRIPTION_ID
-  # AZURE_TENANT_ID
-  use_cli = true
+  use_oidc        = true
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
+  client_id       = var.client_id
 }
 
 # Random provider for generating random names
