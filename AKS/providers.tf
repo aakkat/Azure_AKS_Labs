@@ -27,9 +27,11 @@ provider "azurerm" {
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
-  use_cli = true
-  subscription_id = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
-  tenant_id = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
+  # Provider authentication will be handled through GitHub Actions environment variables:
+  # AZURE_CLIENT_ID
+  # AZURE_CLIENT_SECRET
+  # AZURE_SUBSCRIPTION_ID
+  # AZURE_TENANT_ID
   use_cli = true
 }
 
