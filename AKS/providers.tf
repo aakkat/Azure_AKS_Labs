@@ -27,7 +27,10 @@ provider "azurerm" {
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
-  # Will inherit credentials from azurerm or Azure login in GitHub Actions
+  use_cli = true
+  subscription_id = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
+  tenant_id = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
+  use_cli = true
 }
 
 # Random provider for generating random names
