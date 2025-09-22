@@ -24,17 +24,11 @@ terraform {
 provider "azurerm" {
    features {}
    use_oidc = true
-   subscription_id = var.subscription_id
-   tenant_id       = var.tenant_id
-   client_id       = var.client_id
 }
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
   use_oidc        = true
-  subscription_id = var.subscription_id
-  tenant_id       = var.tenant_id
-  client_id       = var.client_id
 }
 
 # Random provider for generating random names
