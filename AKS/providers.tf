@@ -22,4 +22,16 @@ terraform {
 }
 
 provider "azurerm" {
+   features {}
 }
+
+# AzAPI provider for advanced actions like generateKeyPair
+provider "azapi" {
+  # Will inherit credentials from azurerm or Azure login in GitHub Actions
+}
+
+# Random provider for generating random names
+provider "random" {}
+
+# Time provider if you use delays or waits
+provider "time" {}
