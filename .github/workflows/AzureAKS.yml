@@ -21,11 +21,12 @@ jobs:
         uses: actions/checkout@v3.1.0
         
       - name: 'Az CLI login'
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          client-id: "8b939382-f5c5-4581-8ad0-9573ad670b19"
-          tenant-id: "07fc8f44-8a45-4e66-973d-705143cdbdd1"
-          subscription-id: "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          audience: api://AzureADTokenExchange
   
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.2
@@ -35,14 +36,29 @@ jobs:
 
       - name: Terraform Init
         id: init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
         run: terraform init
       
       - name: Terraform Validate
         id: validate
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
         run: terraform validate
 
       - name: Terraform Plan
         id: plan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
         run: terraform plan
         continue-on-error: true
 
