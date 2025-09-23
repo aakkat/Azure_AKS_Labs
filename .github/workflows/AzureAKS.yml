@@ -75,29 +75,58 @@ jobs:
       - name: Setup kubectl
         uses: azure/setup-kubectl@v3
         
+      - name: Azure CLI Login for AKS
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Get AKS Credentials
-        env:
-          AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
-          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
         run: |
           echo "Getting cluster info from terraform output..."
-          terraform output
-          
-          echo "Setting cluster name and resource group..."
-          CLUSTER_NAME=$(terraform output kubernetes_cluster_name | tr -d '"')
-          RG_NAME=$(terraform output resource_group_name | tr -d '"')
+          CLUSTER_NAME=$(terraform output -raw kubernetes_cluster_name || terraform output kubernetes_cluster_name | tr -d '"')
+          RG_NAME=$(terraform output -raw resource_group_name || terraform output resource_group_name | tr -d '"')
           
           echo "Cluster Name: $CLUSTER_NAME"
           echo "Resource Group: $RG_NAME"
           
           echo "Getting AKS credentials..."
-          az account show
-          az aks get-credentials --name "$CLUSTER_NAME" --resource-group "$RG_NAME" --overwrite-existing
+          az aks get-credentials \
+            --name "$CLUSTER_NAME" \
+            --resource-group "$RG_NAME" \
+            --overwrite-existing \
+            --admin
 
       - name: Set up kubeconfig
         run: |
+          mkdir -p $HOME/.kube
+          kubectl config view
+          kubectl config get-contexts
+          kubectl config current-context
+          
+      - name: Deploy to AKS
+        run: |
+          echo "Current working directory: $(pwd)"
+          echo "Listing AKSApp directory:"
+          ls -la ./AKSApp/
+          
+          echo "Applying Kubernetes manifests..."
+          kubectl apply -f ./AKSApp/sampleapp.yaml
+          
+          echo "Verifying deployment..."
+          kubectl get nodes
+          kubectl get pods --all-namespaces
+          kubectl get deployments --all-namespaces
+          
+          echo "Waiting for service to be ready..."
+          sleep 40
+          kubectl get service nginx-service -o wide
+          
+      - name: Cleanup
+        if: always()
+        run: |
+          echo "Cleaning up resources..."
+          rm -rf $HOME/.kube
+          az logout
           mkdir -p $HOME/.kube
           echo "Verifying kubectl config..."
           kubectl config view
