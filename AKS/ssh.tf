@@ -20,10 +20,10 @@ resource "azapi_resource" "ssh_public_key" {
   schema_validation_enabled = true
   body = jsonencode({
     properties = {}
+    identity = {
+      type = "SystemAssigned"
+    }
   })
-  identity {
-    type = "SystemAssigned"
-  }
 }
 
 output "key_data" {
