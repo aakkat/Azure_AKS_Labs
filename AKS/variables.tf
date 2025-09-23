@@ -28,17 +28,3 @@ variable "username" {
   default     = "azureadmin"
 }
 
-variable "subscription_id" {
-  type        = string
-  description = "The Subscription ID which should be used"
-}
-
-variable "tenant_id" {
-  type        = string
-  description = "The Tenant ID which should be used"
-}
-
-variable "client_id" {
-  type        = string
-  description = "The Client ID which should be used"
-}
