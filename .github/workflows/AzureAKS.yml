@@ -34,43 +34,43 @@ jobs:
           terraform_version: latest
           cli_config_credentials_token: ${{ secrets.TFC_TOKEN_ID }}
 
-#      - name: Terraform Init
-#        id: init
-#        env:
-#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-#          ARM_USE_OIDC: true
-#        run: terraform init
-#      
-#      - name: Terraform Validate
-#        id: validate
-#        env:
-#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-#          ARM_USE_OIDC: true
-#        run: terraform validate
-#
-#      - name: Terraform Plan
-#        id: plan
-#        env:
-#          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-#          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-#          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-#          ARM_USE_OIDC: true
-#        run: terraform plan
-#        continue-on-error: true
-#
-#      - name: Terraform Plan Status
-#        if: steps.plan.outcome == 'failure'
-#        run: exit 1
-#
+      - name: Terraform Init
+        id: init
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        run: terraform init
+      
+      - name: Terraform Validate
+        id: validate
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ARM_USE_OIDC: true
+        run: terraform plan
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
 #      - name: Terraform Apply
 #        run: terraform apply -auto-approve
 #
-#      - name: Terraform Output
-#        run: terraform output
+      - name: Terraform Output
+        run: terraform output
 
       - name: Setup kubectl
         uses: azure/setup-kubectl@v3
