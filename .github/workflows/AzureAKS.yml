@@ -7,6 +7,8 @@ on:
 permissions:
       id-token: write
       contents: read
+      packages: read
+      pull-requests: read
 jobs: 
   AKS-Cluster-Deployment:
     runs-on: ubuntu-latest
@@ -21,9 +23,9 @@ jobs:
       - name: 'Az CLI login'
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: "8b939382-f5c5-4581-8ad0-9573ad670b19"
+          tenant-id: "07fc8f44-8a45-4e66-973d-705143cdbdd1"
+          subscription-id: "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
   
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.2
