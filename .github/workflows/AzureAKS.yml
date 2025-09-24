@@ -81,41 +81,14 @@ jobs:
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: |
-          # Store Terraform outputs in variables
-          echo "Getting Terraform outputs..."
-          terraform output
-          
-          # Store cluster info in variables
-          echo "Extracting cluster information..."
-          CLUSTER_NAME=$(terraform output kubernetes_cluster_name | tr -d '"')
-          RG_NAME=$(terraform output resource_group_name | tr -d '"')
-          
-          # Debug information
-          echo "Debug information:"
-          echo "Cluster Name: '$CLUSTER_NAME'"
-          echo "Resource Group: '$RG_NAME'"
-          echo "Subscription ID: '$AZURE_SUBSCRIPTION_ID'"
-          
-          # Verify Azure CLI login
-          echo "Verifying Azure login status..."
-          az account show
-          
-          # Validation
-          if [[ -z "$CLUSTER_NAME" || -z "$RG_NAME" ]]; then
-            echo "Error: Cluster name or resource group name is empty."
-            terraform output
-            terraform destroy -auto-approve
-          exit 1
-          fi
-
-          # Get AKS credentials
-          echo "Getting AKS credentials..."
-          az aks get-credentials \
-            --name "$CLUSTER_NAME" \
-            --resource-group "$RG_NAME" \
-            --subscription "$AZURE_SUBSCRIPTION_ID" \
-            --overwrite-existing \
-            --admin
+          CLUSTER_NAME=$(terraform output -raw kubernetes_cluster_name)
+          RG_NAME=$(terraform output -raw resource_group_name)
+          echo "Cluster Name: $CLUSTER_NAME"
+          echo "Resource Group: $RG_NAME"
+          echo "Subscription ID: $AZURE_SUBSCRIPTION_ID"
+          az account set --subscription "$AZURE_SUBSCRIPTION_ID"
+          az aks show --name "$CLUSTER_NAME" --resource-group "$RG_NAME" --subscription "$AZURE_SUBSCRIPTION_ID"
+          az aks get-credentials --name "$CLUSTER_NAME" --resource-group "$RG_NAME" --subscription "$AZURE_SUBSCRIPTION_ID" --admin --overwrite-existing
             
           # Verify kubectl access
           echo "Verifying kubectl configuration..."
