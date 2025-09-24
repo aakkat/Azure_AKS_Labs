@@ -81,18 +81,24 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Get AKS Credentials
+        env:
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         run: |
           echo "Getting cluster info from terraform output..."
-          CLUSTER_NAME=$(terraform output kubernetes_cluster_name | tr -d '"')
-          RG_NAME=$(terraform output resource_group_name | tr -d '"')
+          # Print terraform outputs for debugging
+          terraform output
           
-          echo "Cluster Name: $CLUSTER_NAME"
-          echo "Resource Group: $RG_NAME"
+          # Verify Azure login status
+          echo "Verifying Azure login..."
+          az account show
           
           echo "Getting AKS credentials..."
           az aks get-credentials \
-            --name "${CLUSTER_NAME}" \
-            --resource-group "${RG_NAME}"
+            --name "$(terraform output kubernetes_cluster_name | tr -d '"')" \
+            --resource-group "$(terraform output resource_group_name | tr -d '"')" \
+            --subscription "$AZURE_SUBSCRIPTION_ID" \
+            --overwrite-existing \
+            --admin
 
       - name: Set up kubeconfig
         run: |
