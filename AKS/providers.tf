@@ -19,8 +19,15 @@ terraform {
       version = "0.9.1"
     }
   }
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "CloudQuickLabsAak"
+    
+    workspaces {
+        name = "AzureAKSLabs"
+    }
+  }
 }
-
 provider "azurerm" {
    features {}
    use_oidc = true
