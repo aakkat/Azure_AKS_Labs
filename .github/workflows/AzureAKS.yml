@@ -94,11 +94,9 @@ jobs:
           
           echo "Getting AKS credentials..."
           az aks get-credentials \
-            --name "$(terraform output kubernetes_cluster_name | tr -d '"')" \
-            --resource-group "$(terraform output resource_group_name | tr -d '"')" \
-            --subscription "$AZURE_SUBSCRIPTION_ID" \
-            --overwrite-existing \
-            --admin
+            --name $(terraform output kubernetes_cluster_name | tr -d '"') \
+            --resource-group $(terraform output resource_group_name | tr -d '"') \
+            --subscription "$AZURE_SUBSCRIPTION_ID"
 
       - name: Set up kubeconfig
         run: |
