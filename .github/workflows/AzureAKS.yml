@@ -100,6 +100,14 @@ jobs:
           echo "Verifying Azure login status..."
           az account show
           
+          # Validation
+          if [[ -z "$CLUSTER_NAME" || -z "$RG_NAME" ]]; then
+            echo "Error: Cluster name or resource group name is empty."
+            terraform output
+            terraform destroy -auto-approve
+          exit 1
+          fi
+
           # Get AKS credentials
           echo "Getting AKS credentials..."
           az aks get-credentials \
