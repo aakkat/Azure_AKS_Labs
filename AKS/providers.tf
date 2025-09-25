@@ -30,17 +30,11 @@ terraform {
 }
 provider "azurerm" {
    features {}
-   subscription_id = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
-   tenant_id       = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
-   client_id       = "8b939382-f5c5-4581-8ad0-9573ad670b19"
    use_oidc = true
 }
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
-  subscription_id = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
-  tenant_id       = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
-  client_id       = "8b939382-f5c5-4581-8ad0-9573ad670b19"
   use_oidc = true
 }
 
