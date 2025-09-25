@@ -40,3 +40,20 @@ variable "username" {
   default     = "azureadmin"
 }
 
+variable "client_secret" {
+  type        = string
+  description = "Azure Service Principal client secret"
+  sensitive   = true
+}
+
+variable "repository_name" {
+  type        = string
+  default     = "Azure_AKS_Labs"
+  description = "Name of github repo"
+}
+
+variable "ref_branch" {
+  type        = string
+  default     = "main"
+  description = "Name of branch"
+}
