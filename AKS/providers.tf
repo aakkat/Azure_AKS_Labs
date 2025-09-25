@@ -31,11 +31,13 @@ terraform {
 provider "azurerm" {
    features {}
    use_oidc = true
+   oidc_token_file_path = "" # This should be empty for GitHub Actions OIDC
 }
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
   use_oidc = true
+  oidc_token_file_path = "" # This should be empty for GitHub Actions OIDC
 }
 
 # Random provider for generating random names
