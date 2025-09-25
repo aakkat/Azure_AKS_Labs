@@ -40,11 +40,6 @@ variable "username" {
   default     = "azureadmin"
 }
 
-variable "client_secret" {
-  type        = string
-  description = "Azure Service Principal client secret"
-  sensitive   = true
-}
 
 variable "repository_name" {
   type        = string
