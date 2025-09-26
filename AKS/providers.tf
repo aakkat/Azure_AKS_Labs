@@ -31,19 +31,19 @@ terraform {
 provider "azurerm" {
    features {}
    use_oidc = true
-   tenant_id = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
-   subscription_id = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
-   client_id = "8b939382-f5c5-4581-8ad0-9573ad670b19"
-   client_secret = "aAg8Q~7kgbpY6KBi3Riha5kfCQrxlbn7re-nadkp"
+   tenant_id = var.tenant_ids
+   subscription_id = var.subscription_ids
+   client_id = var.client_ids
+   client_secret = var.client_secrets
 }
 
 # AzAPI provider for advanced actions like generateKeyPair
 provider "azapi" {
   use_oidc = true
-  tenant_id = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
-  subscription_id = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
-  client_id = "8b939382-f5c5-4581-8ad0-9573ad670b19"
-  client_secret = "aAg8Q~7kgbpY6KBi3Riha5kfCQrxlbn7re-nadkp"
+  tenant_id = var.tenant_ids
+  subscription_id = var.subscription_ids
+  client_id = var.client_ids
+  client_secret = var.client_secrets
 }
 
 # Random provider for generating random names

@@ -52,3 +52,24 @@ variable "ref_branch" {
   default     = "main"
   description = "Name of branch"
 }
+
+variable "tenant_ids" {
+  default     = "07fc8f44-8a45-4e66-973d-705143cdbdd1"
+  description = "ID of tenant"
+}
+
+variable "subscription_ids" {
+  default     = "94ef7338-97fb-4eba-8042-ef97ff5cebd4"
+  description = "ID of subscription"
+}
+
+
+variable "client_ids" {
+  default     = "8b939382-f5c5-4581-8ad0-9573ad670b19"
+  description = "ID of Client"
+}
+
+variable "client_secrets" {
+  default     = "aAg8Q~7kgbpY6KBi3Riha5kfCQrxlbn7re-nadkp"
+  description = "client_secrets"
+}
